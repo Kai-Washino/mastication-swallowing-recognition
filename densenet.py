@@ -4,7 +4,7 @@ from tensorflow.keras.models import Model
 
 import numpy as np
 
-class DanceNet:
+class DenseNet:
     def __init__(self, num_class=3):
         self.num_class = num_class        
         self.base_model = DenseNet121(include_top=False, input_shape=(224, 224, 3))
@@ -70,6 +70,6 @@ if __name__ == "__main__":
     test_data.folder_to_dataset(test_cough_folder, np.array([0, 1, 0]), 14)
     test_data.folder_to_dataset(test_voice_folder, np.array([0, 0, 1]), 28)
 
-    model = DanceNet()
+    model = DenseNet()
     model.training(test_data.data, test_data.labels, 2, 32)
     # model.save('20240116_159datasets.keras')
