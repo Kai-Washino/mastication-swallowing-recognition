@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 import numpy as np
 
 class CNN(): 
-    def __init__(self, scale = 661, time_range = 65, num_class = 3, start_filter = 8):
+    def __init__(self, scale=661, time_range=65, num_class=3, start_filter=8):
         self.num_class = num_class
         self.scale = scale
         self.time_range = time_range                
@@ -23,7 +23,7 @@ class CNN():
             Flatten(),  # データのフラット化
             Dense(128, activation='relu'),
             Dense(64, activation='relu'),
-            Dense(1, activation='sigmoid')
+            Dense(self.num_class, activation='softmax')  # 修正ポイント
         ])
 
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
