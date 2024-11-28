@@ -10,7 +10,7 @@ from .audio import Audio
 from .wavelet import Wavelet
 
 
-class DataSet():
+class DataSetCWT():
     def __init__(self, num_samples, img_height=224, img_width=224, channels=3, num_class=3, ):
         self.num_samples = num_samples
         self.img_height = img_height
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     swallowing1 = Wavelet(wav1.sample_rate, wav1.trimmed_data, )
     coefficients, _ =  swallowing1.generate_coefficients()
     print(coefficients)
-    data = DataSet(15)
+    data = DataSetCWT(15)
     label = np.array(0)
     data.add_to_dataset(0, coefficients, label)
     print(len(data.data))
