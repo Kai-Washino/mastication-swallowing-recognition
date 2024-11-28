@@ -10,11 +10,11 @@ from .stft import STFT
 
 
 class DataSetSTFT():
-    def __init__(self, num_samples, scale = 661, time_range = 65):
+    def __init__(self, num_samples, scale = 661, time_range = 65, num_class=3,):
         self.time_range = time_range        
         self.scale = scale
         self.data = np.zeros((num_samples, self.time_range, self.scale))
-        self.labels = np.zeros(num_samples)
+        self.labels = np.zeros((num_samples, num_class)) 
         self.max_cols = 0
 
     def add_to_dataset(self, i, data, label):        
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     spectrogram =  swallowing1.generate_spectrogram()
     print(spectrogram.shape)
     data = DataSetSTFT(15)
-    label = np.array(0)
+    label = np.array([0, 1, 0])
     data.add_to_dataset(0, spectrogram, label)
     print(len(data.data))
     print(len(data.data[0]))
