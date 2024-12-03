@@ -11,14 +11,15 @@ from .wavelet import Wavelet
 
 
 class DataSetCWT():
-    def __init__(self, num_samples, img_height=224, img_width=224, channels=3, num_class=3, ):
+    def __init__(self, num_samples, img_height=224, img_width=224, channels=3, num_class=3, silence_recognition = False):
         self.num_samples = num_samples
         self.img_height = img_height
         self.img_width = img_width
         self.channels = channels
         self.num_class = num_class                
         self.data = np.zeros((num_samples, img_height, img_width, channels))
-        self.labels = np.zeros((num_samples, num_class))        
+        self.labels = np.zeros((num_samples, num_class))   
+        self.silence_recognition = silence_recognition     
 
     def add_to_dataset(self, i, coefficients, label):        
         spectrogram = np.abs(coefficients)
@@ -35,10 +36,10 @@ class DataSetCWT():
         self.data[i] = resized_spectrogram_rgb
         self.labels[i] = label
         
-    def folder_to_dataset(self, folder_name, label, start_num):        
+    def folder_to_dataset(self, folder_name, label, start_num, ):        
         file_names = self.get_wav_files(folder_name)
         for i, file_name in enumerate(file_names):
-            wav = Audio(folder_name / file_name)
+            wav = Audio(folder_name / file_name, silence_recognition = self.silence_recognition)
             wavdata = Wavelet(wav.sample_rate, wav.trimmed_data, )
             coefficients, _ =  wavdata.generate_coefficients()
             self.add_to_dataset(start_num + i, coefficients, label)

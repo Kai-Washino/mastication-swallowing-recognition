@@ -64,7 +64,7 @@ if __name__ == "__main__":
     test_swallowing_folder = directory_path / 'shibata' / 'swallowing'    
 
     # train_data = DataSet(200, 224, 224, 3, 2)
-    test_data = DataSetCWT(42)
+    test_data = DataSetCWT(42, silence_recognition = True)
 
     test_data.folder_to_dataset(test_swallowing_folder, np.array([1, 0, 0]), 0)
     test_data.folder_to_dataset(test_cough_folder, np.array([0, 1, 0]), 14)

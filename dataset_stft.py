@@ -10,12 +10,13 @@ from .stft import STFT
 
 
 class DataSetSTFT():
-    def __init__(self, num_samples, scale = 661, time_range = 65, num_class=3,):
+    def __init__(self, num_samples, scale = 661, time_range = 65, num_class=3, silence_recognition = False):
         self.time_range = time_range        
         self.scale = scale
         self.data = np.zeros((num_samples, self.time_range, self.scale))
         self.labels = np.zeros((num_samples, num_class)) 
         self.max_cols = 0
+        self.silence_recognition = silence_recognition
 
     def add_to_dataset(self, i, data, label):        
         if type(data) == tuple:
@@ -58,7 +59,7 @@ class DataSetSTFT():
     def folder_to_dataset(self, folder_name, label, start_num):        
         file_names = self.get_wav_files(folder_name)
         for i, file_name in enumerate(file_names):
-            wav = Audio(folder_name / file_name)
+            wav = Audio(folder_name / file_name, silence_recognition=self.silence_recognition)
             wavdata = STFT(wav.sample_rate, wav.trimmed_data, )
             spectrogram = wavdata.generate_spectrogram()
             self.add_to_dataset(start_num + i, spectrogram, label)
